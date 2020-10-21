@@ -28,6 +28,11 @@ body {
 .block-container {
   display: flex;
   justify-content: center;
+  margin-top: 50px;
+}
+
+.block {
+  max-width: 640px;
 }
 
 .block-header {
@@ -58,4 +63,9 @@ body {
 
 .action-button img {
   transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+
+.block-media img {
+  width: 100%;
 }
