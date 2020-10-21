@@ -1,0 +1,30 @@
+version: '3'
+
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.env
+    networks:
+      - app-tier
+    #volumes:
+      #- ./volumes/postgres:/volumes/postgres
+
+  web:
+    build: ./app
+    volumes:
+      - ./app:/usr/src/app/
+    ports:
+      #- "3005:3000"
+      - "8087:80"
+    networks:
+      - app-tier
+    env_file:
+      - ./.env
