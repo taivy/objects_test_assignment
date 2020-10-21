@@ -9,13 +9,28 @@ services:
   db:
     image: postgres:11
     ports:
-      - "5432:5432"
+      - "5433:5432"
     env_file:
       - ./.env
     networks:
       - app-tier
-    #volumes:
-      #- ./volumes/postgres:/volumes/postgres
+    volumes:
+      - ./volumes/postgres:/volumes/postgres
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: gunicorn settings.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./static_volume:/home/app/web/staticfiles
+      - ./media_volume:/home/app/web/mediafiles
+    ports:
+      - "8088:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
 
   web:
     build: ./app
