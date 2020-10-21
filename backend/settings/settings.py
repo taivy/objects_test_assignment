@@ -39,6 +39,8 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'my-awesome-header'
 ]
 
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
 
 # Application definition
 

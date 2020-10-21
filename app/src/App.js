@@ -25,10 +25,23 @@ function App() {
     setAnchorEl(null);
   };
 
-  const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles);
+  const onDrop = useCallback(async (acceptedFiles) => {
 	const formData = new FormData();
 	formData.append('file', acceptedFiles[0]);
+
+	/*
+	let response = await fetch(process.env.BACKEND_URL, {
+	  method: 'POST',
+	  body: formData
+	});*/
+	let response = await fetch("http://64.227.43.113:8088", {
+	  method: 'POST',
+	  body: formData
+	});
+
+
+	let data = await response.json();
+	console.log(data)
   }, []);
 
   const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
