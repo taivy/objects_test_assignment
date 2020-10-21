@@ -16,6 +16,7 @@ import './App.css';
 
 function App() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [blockImgSrc, setBlockImgSrc] = React.useState("https://gagadget.com/media/cache/ca/bb/cabb848a7a94d220637c60682e3955ae.jpg");
 
   const handleActionBtnClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,19 +30,14 @@ function App() {
 	const formData = new FormData();
 	formData.append('file', acceptedFiles[0]);
 
-	/*
-	let response = await fetch(process.env.BACKEND_URL, {
-	  method: 'POST',
-	  body: formData
-	});*/
-	let response = await fetch("http://64.227.43.113:8088", {
+	const backendUrl = 'http://64.227.43.113:8088'
+	let response = await fetch(backendUrl, {
 	  method: 'POST',
 	  body: formData
 	});
 
-
 	let data = await response.json();
-	console.log(data)
+	setBlockImgSrc(backendUrl + data['image_url'])
   }, []);
 
   const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
@@ -104,7 +100,7 @@ function App() {
 	    			</div>
 	    		</div>
 	    		<div className="block-media">
-	    			<img src="https://gagadget.com/media/cache/ca/bb/cabb848a7a94d220637c60682e3955ae.jpg" />
+	    			<img src={blockImgSrc} />
 	    		</div>
 	    		<div className="block-content">
 	    			<p>

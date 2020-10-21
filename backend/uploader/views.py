@@ -21,9 +21,9 @@ def image_upload(request):
         filename = fs.save(image_file.name, image_file)
         image_url = fs.url(filename)
         print(image_url)
-        return Response(json.dumps({
+        return Response({
             'image_url': image_url
-        }))
+        })
     else:
         raise ValidationError({'msg': 'Incorrect request format'})
 
