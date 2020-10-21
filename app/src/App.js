@@ -1,6 +1,15 @@
 import React from 'react';
 import Popover from '@material-ui/core/Popover';
 import { IconButton } from '@material-ui/core';
+import { MenuList } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import VideoCallOutlinedIcon from '@material-ui/icons/VideoCallOutlined';
+import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import { Divider } from '@material-ui/core';
+
 import './App.css';
 
 
@@ -41,7 +50,27 @@ function App() {
 				            horizontal: 'center',
 				          }}
 				        >
-				          <p>The content of the Popover.</p>
+				          <MenuList>
+				            <MenuItem>
+				            	<ListItemIcon>
+				            		<AddPhotoAlternateOutlinedIcon />
+				            	</ListItemIcon>
+				            	<ListItemText primary="Add Image" />
+				            </MenuItem>
+				            <MenuItem>
+				            	<ListItemIcon>
+				            		<VideoCallOutlinedIcon />
+				            	</ListItemIcon>
+				            	<ListItemText primary="Add Video" />
+				            </MenuItem>
+				            <Divider />
+				            <MenuItem>
+				            	<ListItemIcon>
+				            		<DeleteOutlineOutlinedIcon />
+				            	</ListItemIcon>
+				            	<ListItemText primary="Delete Block" style={{color: "red"}} />
+				            </MenuItem>
+				          </MenuList>
 				        </Popover>
 	    			</div>
 	    		</div>
@@ -50,7 +79,7 @@ function App() {
 	    		</div>
 	    		<div className="block-content">
 	    			<p>
-	    				Block #1 text fefe
+	    				Block #1 text
 	    			</p>
 	    		</div>
 	    	</div>
