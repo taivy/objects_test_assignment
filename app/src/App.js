@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Popover from '@material-ui/core/Popover';
 import { IconButton } from '@material-ui/core';
 import { MenuList } from '@material-ui/core';
@@ -25,13 +25,18 @@ function App() {
     setAnchorEl(null);
   };
 
-  const handleAddImage = () => {
-
-  }
+  const onDrop = useCallback(acceptedFiles => {
+    console.log(acceptedFiles);
+	const formData = new FormData();
+	formData.append('file', acceptedFiles[0]);
+  }, []);
 
   const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
     noClick: true,
-    noKeyboard: true
+    noKeyboard: true,
+    accept: 'image/*',
+    multiple: false,
+    onDrop
   });
 
   const actionPopoverOpen = Boolean(anchorEl);
