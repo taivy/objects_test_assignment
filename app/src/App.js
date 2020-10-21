@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -9,7 +8,9 @@ function App() {
 	    	<div className="block">
 	    		<div className="block-header">
 	    			<div className="block-action">
-	    				
+	    				<button className="action-button">
+	    					<img src="/dots.svg" />
+	    				</button>
 	    			</div>
 	    		</div>
 	    		<div className="block-media">
@@ -17,7 +18,7 @@ function App() {
 	    		</div>
 	    		<div className="block-content">
 	    			<p>
-	    				Block #1 text
+	    				Block #1 text fefe
 	    			</p>
 	    		</div>
 	    	</div>
