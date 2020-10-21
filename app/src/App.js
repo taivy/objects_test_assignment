@@ -9,6 +9,7 @@ import VideoCallOutlinedIcon from '@material-ui/icons/VideoCallOutlined';
 import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import { Divider } from '@material-ui/core';
+import {useDropzone} from 'react-dropzone';
 
 import './App.css';
 
@@ -25,8 +26,13 @@ function App() {
   };
 
   const handleAddImage = () => {
-  	
+
   }
+
+  const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
+    noClick: true,
+    noKeyboard: true
+  });
 
   const actionPopoverOpen = Boolean(anchorEl);
   const actionPopoverId = actionPopoverOpen ? 'action-btn-popover' : undefined;
@@ -55,10 +61,11 @@ function App() {
 				          }}
 				        >
 				          <MenuList>
-				            <MenuItem onClick={handleAddImage}>
+				            <MenuItem onClick={open}>
 				            	<ListItemIcon>
 				            		<AddPhotoAlternateOutlinedIcon />
 				            	</ListItemIcon>
+				            	<input {...getInputProps()} />
 				            	<ListItemText primary="Add Image" />
 				            </MenuItem>
 				            <MenuItem>
