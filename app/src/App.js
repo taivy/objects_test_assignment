@@ -24,6 +24,10 @@ function App() {
     setAnchorEl(null);
   };
 
+  const handleAddImage = () => {
+  	
+  }
+
   const actionPopoverOpen = Boolean(anchorEl);
   const actionPopoverId = actionPopoverOpen ? 'action-btn-popover' : undefined;
 
@@ -51,7 +55,7 @@ function App() {
 				          }}
 				        >
 				          <MenuList>
-				            <MenuItem>
+				            <MenuItem onClick={handleAddImage}>
 				            	<ListItemIcon>
 				            		<AddPhotoAlternateOutlinedIcon />
 				            	</ListItemIcon>
