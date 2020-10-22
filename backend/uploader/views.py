@@ -1,12 +1,8 @@
-import json
-
-from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from rest_framework.views import Response
 from rest_framework.serializers import ValidationError
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view
 
 
 @csrf_exempt
