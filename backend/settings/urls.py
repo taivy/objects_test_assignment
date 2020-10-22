@@ -18,10 +18,11 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from uploader.views import image_upload
+from uploader.views import ImageUploaderViewSet, BlocksInfoViewSet
 
 
 urlpatterns = [
-    path('', image_upload, name='upload'),
+    path('uploader/<block_id>', ImageUploaderViewSet.as_view()),
+    path('blocks', BlocksInfoViewSet.as_view({'get': 'list'})),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
