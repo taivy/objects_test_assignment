@@ -40,7 +40,7 @@ function App() {
 	setBlockImgSrc(backendUrl + data['image_url'])
   }, []);
 
-  const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
+  const {getInputProps, open} = useDropzone({
     noClick: true,
     noKeyboard: true,
     accept: 'image/*',
