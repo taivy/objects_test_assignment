@@ -11,4 +11,8 @@ then
     echo "PostgreSQL started"
 fi
 
+python /code/manage.py makemigrations uploader
+python /code/manage.py migrate
+python /code/manage.py loaddata block.json
+
 exec "$@"

@@ -31,6 +31,8 @@ services:
       - ./.env
     depends_on:
       - db
+    networks:
+      - app-tier
 
   web:
     build: ./app

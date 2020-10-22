@@ -1,0 +1,10 @@
+[
+{
+    "model": "uploader.block",
+    "pk": 1,
+    "fields": {
+        "text": "Block #1 text",
+        "img_url": "https://gagadget.com/media/cache/ca/bb/cabb848a7a94d220637c60682e3955ae.jpg",
+        "creation_date": "2020-10-22T17:00:14.997Z"
+    }
+}]
