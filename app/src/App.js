@@ -14,9 +14,14 @@ import {useDropzone} from 'react-dropzone';
 import './App.css';
 
 
-function App() {
+const backendUrl = 'http://64.227.43.113:8088';
+
+
+function Block(props) {
+  const [blockData] = props;
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [blockImgSrc, setBlockImgSrc] = React.useState("https://gagadget.com/media/cache/ca/bb/cabb848a7a94d220637c60682e3955ae.jpg");
 
   const handleActionBtnClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,18 +32,23 @@ function App() {
   };
 
   const onDrop = useCallback(async (acceptedFiles) => {
-	const formData = new FormData();
-	formData.append('file', acceptedFiles[0]);
+  	const formData = new FormData();
+  	formData.append('file', acceptedFiles[0]);
+    let data;
 
-	const backendUrl = 'http://64.227.43.113:8088'
-	let response = await fetch(backendUrl, {
-	  method: 'POST',
-	  body: formData
-	});
+  	try {
+    	let response = await fetch(backendUrl + 'uploader/' + blockData['id'], {
+    	  method: 'POST',
+    	  body: formData
+    	});
 
-	let data = await response.json();
-	setBlockImgSrc(backendUrl + data['image_url'])
-  }, []);
+    	data = await response.json();
+  	} catch(e) {
+      console.log(e)
+      return
+    }
+	  blockData['image_url'] = backendUrl + data['image_url'];
+  }, [blockData]);
 
   const {getInputProps, open} = useDropzone({
     noClick: true,
@@ -51,63 +61,84 @@ function App() {
   const actionPopoverOpen = Boolean(anchorEl);
   const actionPopoverId = actionPopoverOpen ? 'action-btn-popover' : undefined;
 
+    return  (
+		<div className="block">
+    		<div className="block-header">
+    			<div className="block-action">
+    				<IconButton className="action-button" aria-describedby={actionPopoverId} onClick={handleActionBtnClick}>
+    					<img src="/dots.svg" />
+    				</IconButton>
+			        <Popover
+			          id={actionPopoverId}
+			          open={actionPopoverOpen}
+			          anchorEl={anchorEl}
+			          onClose={handleActionBtnClose}
+			          anchorOrigin={{
+			            vertical: 'bottom',
+			            horizontal: 'center',
+			          }}
+			          transformOrigin={{
+			            vertical: 'top',
+			            horizontal: 'center',
+			          }}
+			        >
+			          <MenuList>
+			            <MenuItem onClick={open}>
+			            	<ListItemIcon>
+			            		<AddPhotoAlternateOutlinedIcon />
+			            	</ListItemIcon>
+			            	<input {...getInputProps()} />
+			            	<ListItemText primary="Add Image" />
+			            </MenuItem>
+			            <MenuItem>
+			            	<ListItemIcon>
+			            		<VideoCallOutlinedIcon />
+			            	</ListItemIcon>
+			            	<ListItemText primary="Add Video" />
+			            </MenuItem>
+			            <Divider />
+			            <MenuItem>
+			            	<ListItemIcon>
+			            		<DeleteOutlineOutlinedIcon />
+			            	</ListItemIcon>
+			            	<ListItemText primary="Delete Block" style={{color: "red"}} />
+			            </MenuItem>
+			          </MenuList>
+			        </Popover>
+    			</div>
+    		</div>
+    		<div className="block-media">
+    			<img src={backendUrl + blockData['img_url']} />
+    		</div>
+    		<div className="block-content">
+    			<p>
+    				{ blockData['text'] }
+    			</p>
+    		</div>
+    	</div>
+	)
+}
+
+
+function App() {
+  const [blocks, setBlocks] = React.useState([]);
+
+  const getBlocks = async () => {
+  	const getBlockEndpoint = backendUrl + "blocks"
+  	let response = await fetch(getBlockEndpoint, {
+  	  method: 'GET'
+  	});
+
+  	let data = await response.json();
+  	setBlocks(data['blocks']);
+  }
+
   return (
     <div className="App">
 	    <div className="block-container">
-	    	<div className="block">
-	    		<div className="block-header">
-	    			<div className="block-action">
-	    				<IconButton className="action-button" aria-describedby={actionPopoverId} onClick={handleActionBtnClick}>
-	    					<img src="/dots.svg" />
-	    				</IconButton>
-				        <Popover
-				          id={actionPopoverId}
-				          open={actionPopoverOpen}
-				          anchorEl={anchorEl}
-				          onClose={handleActionBtnClose}
-				          anchorOrigin={{
-				            vertical: 'bottom',
-				            horizontal: 'center',
-				          }}
-				          transformOrigin={{
-				            vertical: 'top',
-				            horizontal: 'center',
-				          }}
-				        >
-				          <MenuList>
-				            <MenuItem onClick={open}>
-				            	<ListItemIcon>
-				            		<AddPhotoAlternateOutlinedIcon />
-				            	</ListItemIcon>
-				            	<input {...getInputProps()} />
-				            	<ListItemText primary="Add Image" />
-				            </MenuItem>
-				            <MenuItem>
-				            	<ListItemIcon>
-				            		<VideoCallOutlinedIcon />
-				            	</ListItemIcon>
-				            	<ListItemText primary="Add Video" />
-				            </MenuItem>
-				            <Divider />
-				            <MenuItem>
-				            	<ListItemIcon>
-				            		<DeleteOutlineOutlinedIcon />
-				            	</ListItemIcon>
-				            	<ListItemText primary="Delete Block" style={{color: "red"}} />
-				            </MenuItem>
-				          </MenuList>
-				        </Popover>
-	    			</div>
-	    		</div>
-	    		<div className="block-media">
-	    			<img src={blockImgSrc} />
-	    		</div>
-	    		<div className="block-content">
-	    			<p>
-	    				Block #1 text
-	    			</p>
-	    		</div>
-	    	</div>
+	    	{blocks.map((blockData) => (
+	    		<Block blockData />
+	    	))}
 	    </div>
     </div>
   );
