@@ -1,1 +1,3 @@
-"# objects_test_assignment" 
+# Start
+
+`docker-compose up -d`
